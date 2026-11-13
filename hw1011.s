@@ -100,7 +100,7 @@ make_arithmetic_sequence:
     movq %rdx, -24(%rbp)
     movq $0, %rax
     cmpq $0, %rdx
-    je end_case_mas
+    jle end_case_mas
     imulq $8, %rdx, %rdi
     call malloc
     cmpq $0, %rax
