@@ -65,8 +65,27 @@ sensor_score:
     .type sensor_array_total, @function
 sensor_array_total:
     # TODO: Problem 4
+    pushq %rbp
+    movq %rsp, %rbp
+    subq $32, %rsp
     movq $0, %rax
-
+    movq %rax, -8(%rbp)
+    movq %rdi, -16(%rbp)
+    movq %rsi, -24(%rbp)
+    cmpq $0, %rsi
+    je end_case_sat
+repeate_case_sat:
+    cmpq $0, -24(%rbp)
+    je end_case_sat
+    movq -16(%rbp), %rdi
+    call sensor_score
+    addq %rax, -8(%rbp)
+    addq $24, -16(%rbp)
+    subq $1, -24(%rbp)
+    jmp repeate_case_sat
+end_case_sat:
+    movq -8(%rbp), %rax
+    leave
     ret
 
     .globl make_arithmetic_sequence
