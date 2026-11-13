@@ -53,6 +53,12 @@ end_case_rl:
 sensor_score:
     # TODO: Problem 3
     movq $0, %rax
+    movq $0, %rsi
+    movq 8(%rdi), %rax
+    movslq 16(%rdi), %rsi
+    imulq %rsi, %rax
+    movslq (%rdi), %rsi
+    addq %rsi, %rax
     ret
 
     .globl sensor_array_total
@@ -60,6 +66,7 @@ sensor_score:
 sensor_array_total:
     # TODO: Problem 4
     movq $0, %rax
+
     ret
 
     .globl make_arithmetic_sequence
