@@ -92,7 +92,35 @@ end_case_sat:
     .type make_arithmetic_sequence, @function
 make_arithmetic_sequence:
     # TODO: Problem 5
+    pushq %rbp
+    movq %rsp, %rbp
+    subq $32, %rsp
+    movq %rdi, -8(%rbp)
+    movq %rsi, -16(%rbp)
+    movq %rdx, -24(%rbp)
     movq $0, %rax
+    cmpq $0, %rdx
+    je end_case_mas
+    imulq $8, %rdx, %rdi
+    call malloc
+    cmpq $0, %rax
+    je end_case_mas
+    movq $0, %rdi
+    movq %rax, %rsi
+    movq $0, %rcx
+repeate_case_mas:
+    cmpq -24(%rbp), %rdi
+    je end_case_mas
+    movq -16(%rbp), %rcx
+    imulq %rdi, %rcx
+    movq %rcx, (%rsi)
+    movq -8(%rbp), %rcx
+    addq %rcx, (%rsi)
+    addq $1, %rdi
+    addq $8, %rsi
+    jmp repeate_case_mas
+end_case_mas:
+    leave
     ret
 
     .globl make_sensor
