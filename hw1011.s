@@ -127,13 +127,39 @@ end_case_mas:
     .type make_sensor, @function
 make_sensor:
     # TODO: Problem 6A
+    pushq %rbp
+    movq %rsp, %rbp
+    subq $16, %rsp
+    movl %edi, -4(%rbp)
+    movq %rsi, -12(%rbp)
+    movl %edx, -16(%rbp)
     movq $0, %rax
+    movq $24, %rdi
+    call malloc
+    cmpq $0, %rax
+    je end_case_ms
+    movl -4(%rbp), %ecx
+    movl %ecx, (%rax)
+    movq -12(%rbp), %rcx
+    movq %rcx, 8(%rax)
+    movl -16(%rbp), %ecx
+    movl %ecx, 16(%rax)
+end_case_ms:
+    leave
     ret
 
     .globl sensor_destroy
     .type sensor_destroy, @function
 sensor_destroy:
     # TODO: Problem 6B
+    pushq %rbp
+    movq %rsp, %rbp
+    movq $0, %rax
+    cmpq $0, %rdi
+    je end_case_sd
+    call free
+end_case_sd:
+    leave
     ret
 
     .section .note.GNU-stack,"",@progbits
