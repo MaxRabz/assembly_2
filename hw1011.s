@@ -26,6 +26,26 @@ end_case:
     .type reverse_longs, @function
 reverse_longs:
     # TODO: Problem 2
+    cmpq $0, %rsi
+    je end_case_rl
+    movq $0, %rcx
+    movq $0, %r8
+    movq $0, %r9
+    imulq $8, %rsi
+    subq $8, %rsi
+    movq %rdi, %rcx
+    addq %rsi, %rcx
+repeat_case_rl:
+    cmpq %rdi, %rcx
+    jle end_case_rl
+    movq (%rdi), %r8
+    movq (%rcx), %r9
+    movq %r9, (%rdi)
+    movq %r8, (%rcx)
+    addq $8, %rdi
+    subq $8, %rcx
+    jmp repeat_case_rl
+end_case_rl:
     ret
 
     .globl sensor_score
