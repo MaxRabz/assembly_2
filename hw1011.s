@@ -5,7 +5,22 @@
 sum_positive_ints:
     # TODO: Problem 1
     movq $0, %rax
-    ret
+    cmpq $0, %rsi
+    je end_case
+repeate_case:
+    cmpq $0, %rsi
+    je end_case
+    subq $1, %rsi
+    movslq (%rdi), %rdx
+    addq $4, %rdi
+    cmpq $0, %rdx
+    jg positive_int
+    jmp repeate_case
+positive_int:
+    addq %rdx, %rax
+    jmp repeate_case
+end_case:
+    ret 
 
     .globl reverse_longs
     .type reverse_longs, @function
